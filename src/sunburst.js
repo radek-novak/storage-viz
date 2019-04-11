@@ -28,6 +28,9 @@ const pathEl = center => (angFrom, angTo, distNear, distFar) => {
   `;
 };
 
+module.exports = {
+  pathEl
+};
 // const coord = { angle: Math.PI / 2, distance: 20 };
 // const center = [50, 50];
 
