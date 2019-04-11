@@ -11,9 +11,16 @@
     Chromium <script>document.write(process.versions.chrome)</script>,
     and Electron <script>document.write(process.versions.electron)</script>.
 
+    <pre id="info"></pre>
     <script>
       // You can also require other files to run in this process
-      require('./renderer.js')
+      const { getFolderSizes } = require('./renderer.js');
+      const info = document.getElementById('info');
+      console.log('xyz')
+      getFolderSizes('/Users/rdkn', 1).then(data => {
+        console.log(data)
+        info.innerHTML = JSON.stringify(data, null, 2)
+      });
     </script>
   </body>
 </html>
