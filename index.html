@@ -5,22 +5,49 @@
     <title>Hello World!</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
     <!-- All of the Node.js APIs are available in this renderer process. -->
+    <!-- <h1>Hello World!</h1>
     We are using Node.js <script>document.write(process.versions.node)</script>,
     Chromium <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
+    and Electron <script>document.write(process.versions.electron)</script>. -->
 
+    <svg id="graph" width="500" height="500"></svg>
     <pre id="info"></pre>
+
     <script>
       // You can also require other files to run in this process
       const { getFolderSizes } = require('./renderer.js');
+      const { pathEl } = require('./src/sunburst.js');
+      const { getUserPath } = require('./src/data.js');
       const info = document.getElementById('info');
-      console.log('xyz')
-      getFolderSizes('/Users/rdkn', 1).then(data => {
-        console.log(data)
-        info.innerHTML = JSON.stringify(data, null, 2)
-      });
+      const graph = document.getElementById('graph');
+      const myPath = pathEl([250, 250])
+
+      info.innerHTML = 'Loading';
+      const processData = data => {
+        const [[_homePath, sum], ...level1] = data;
+
+        // start from 12 o'clock
+        let lastAngle = -Math.PI/2;
+        // change to relative size
+        for (let pathsize of level1) {
+          const relSize = 2 * Math.PI * pathsize[1]/sum;
+
+          graph.innerHTML += myPath(lastAngle, relSize + lastAngle, 10, 50);
+          lastAngle += relSize;
+        }
+
+        info.innerHTML = JSON.stringify(data, null, 2);
+
+        return data;
+      }
+      const data = localStorage.getItem('/Users/rdkn');
+      if (data) {
+        processData(JSON.parse(data))
+      } else {
+        getFolderSizes('/Users/rdkn', 1).then(processData).then(data => localStorage.setItem('/Users/rdkn', JSON.stringify(data)));
+      }
+
     </script>
   </body>
 </html>
