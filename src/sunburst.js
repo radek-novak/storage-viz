@@ -1,10 +1,12 @@
+const { obj2param } = require("./helpers");
+
 const polarToCartesian = ([cx, cy]) => polarCoord => [
   Math.cos(polarCoord.angle) * polarCoord.distance + cx,
   Math.sin(polarCoord.angle) * polarCoord.distance + cy
 ];
 const mag = ([cx, cy]) => ([x, y]) => Math.sqrt((x - cx) ** 2 + (y - cy) ** 2);
 
-const pathEl = center => (angFrom, angTo, distNear, distFar) => {
+const pathEl = center => (angFrom, angTo, distNear, distFar, params = {}) => {
   const p2c = polarToCartesian(center);
   const m2c = mag(center);
   const a = p2c({ angle: angFrom, distance: distFar });
@@ -23,8 +25,7 @@ const pathEl = center => (angFrom, angTo, distNear, distFar) => {
       A${r2},${r2},0,${isOverPi},0,${d[0]},${d[1]}
       Z
     "
-    stroke="#000"
-    fill="#fff"/>
+    ${obj2param(params)}/>
   `;
 };
 
