@@ -6,6 +6,8 @@ import Viz from '../components/Viz';
 import getFolderSizes from '../src/filesizes/getFolderSizes';
 import dir2tree from '../src/filesizes/dir2tree';
 import { pathToStr } from '../utils/helpers';
+import { Link } from 'react-router-dom';
+import routes from '../constants/routes';
 
 type Props = {};
 
@@ -94,7 +96,7 @@ export default class HomePage extends Component<Props> {
 
     return (
       <>
-        <div style={{ position: 'absolute', margin: '0.5rem' }}>
+        <div className="TopBar">
           {loading ? (
             'Loading...'
           ) : (
@@ -105,12 +107,15 @@ export default class HomePage extends Component<Props> {
             />
           )}
         </div>
+        <div className="TopRightNav">
+          <Link to={routes.SETTINGS}>&#x1f527;settings</Link>
+        </div>
         <Viz
           data={currentTreeData}
           onHover={this.handleHover}
           onClick={this.handleClick}
         />
-        <div style={{ position: 'absolute', margin: '0.5rem', bottom: '20px' }}>
+        <div className="BottomBar">
           <PathSizeIndicator path={combinedPath} size={size} />
         </div>
       </>

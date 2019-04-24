@@ -20,8 +20,12 @@ body {
     rgba(0, 216, 255, 0.5) 10%,
     rgba(0, 1, 127, 0.7)
     );
-    font-family: Arial, Helvetica, Helvetica Neue, serif;
+    font-family: -apple-system, Helvetica Neue, Helvetica, Arial, serif;
     overflow-y: hidden;
+  }
+
+  *, *:before, *:after {
+    box-sizing: border-box;
   }
   
   h2 {
@@ -79,4 +83,31 @@ body {
 
   .u-noPointerEv {
     pointer-events: none;
+  }
+
+  .BottomBar {
+    position: absolute;
+    margin: 0.5rem;
+    bottom: 20px;
+  }
+  .TopBar {
+    position: absolute;
+    padding: 0.5rem;
+    width: 100%;
+  }
+
+  .TopRightNav {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+
+  .SettingsPage {
+    position: relative;
+  }
+  .SettingsPage__container {
+    margin: 0 auto;
+    max-width: 90vw;
+    text-align: center;
+    padding-top: 1px;
   }
